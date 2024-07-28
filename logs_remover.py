@@ -20,26 +20,25 @@ class App:
     def __init__(self, root):
         self.root = root
         self.root.title("LogsRemover made by cia #branchezvous")
-        self.root.geometry("800x600")  # Ajusté pour la taille des colonnes
+        self.root.geometry("800x600")  
 
-        # Créer la barre de boutons
         self.toolbar = tk.Frame(self.root)
         self.toolbar.pack(side='top', fill='x')
 
-        # Bouton pour actualiser
+
         self.refresh_button = ttk.Button(self.toolbar, text="Actualiser", command=self.update_process_list)
         self.refresh_button.pack(side='left', padx=5, pady=5)
 
-        # Case à cocher pour actualisation automatique
+
         self.auto_refresh_var = tk.BooleanVar(value=True)
         self.auto_refresh_check = ttk.Checkbutton(self.toolbar, text="Actualisation automatique", variable=self.auto_refresh_var)
         self.auto_refresh_check.pack(side='left', padx=5, pady=5)
 
-        # Zone de texte pour les journaux (en lecture seule)
+
         self.text_area = scrolledtext.ScrolledText(self.root, wrap=tk.WORD, state=tk.DISABLED)
         self.text_area.pack(expand=True, fill='both')
 
-        # Liste des processus avec la colonne PID
+
         self.process_list = ttk.Treeview(self.root, columns=('pid', 'status'))
         self.process_list.pack(expand=True, fill='both')
         self.process_list.heading("#0", text="Processus")
@@ -64,15 +63,14 @@ class App:
         self.start_exe_monitoring()
 
     def log_event(self, message):
-        # Activer temporairement la modification pour insérer le texte
         self.text_area.configure(state=tk.NORMAL)
         self.text_area.insert(tk.END, message + "\n")
         self.text_area.yview(tk.END)
-        # Désactiver la modification pour rendre la zone de texte en lecture seule
+
         self.text_area.configure(state=tk.DISABLED)
 
     def start_log_monitoring(self):
-        dir_to_monitor = r'D:\\'  # Ajustez ceci au répertoire à surveiller
+        dir_to_monitor = r'D:\\' 
         event_handler = LogHandler(self)
         observer = Observer()
         observer.schedule(event_handler, path=dir_to_monitor, recursive=True)
